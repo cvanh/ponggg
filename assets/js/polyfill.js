@@ -1,4 +1,4 @@
-// Onderstaande functie is een polyfill voor het afhandelen van een 'keydown' event.
+// Onderstaande functie is een polyfill voor het afhandelen van een 'keydown' event.  // TODO FIX THIS 
 // Aangezien event.keyCode DEPRECATED is, moeten we uitgaan van event.key, met een "terugval-optie".
 // We noemen zo'n "terugval-optie" ook wel een 'polyfill'. Functionaliteit toevoegen, indien het niet 
 // door de browser wordt ondersteund. Je voorkomt daar een mogelijke "breach" in je code mee!

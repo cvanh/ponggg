@@ -2,7 +2,7 @@
 | PONG 2021 (Javascript / Pong game / 1WDV)   |
 -----------------------------------------------
 
-
+BLAFLKDSHFJHDFLKJHDSLKFJLHSKDAJFHKJDSHFLKJHDSAKJFHASKDJFHLKDSJHFKALJDSFKJDSHFAKJDSHFKJLSAHDFLKHJDS;OGPORIVGP9YUGVOG
 --------------------------------------------------------------------------
 Stap 0: BOILERPLATE & SETUP & GIT
 --------------------------------------------------------------------------  
