@@ -1,7 +1,6 @@
 
 class Game {
 	constructor() {
-)
 		this.canvas = document.getElementById("pong");
 		this.context = this.canvas.getContext("2d");
 
@@ -91,14 +90,14 @@ class Game {
 
 	update(deltatime) {
 		if (this.ball.locked) return;
-
+		// op basis van de snelheid momentum wordt de positie van de ball aangepast
 		this.ball.position.x += this.ball.velocity.x * deltatime;
 		this.ball.position.y += this.ball.velocity.y * deltatime;
 
 		this.players[0].position.y += this.players[0].velocity.y * deltatime;
 		this.players[1].position.y += this.players[1].velocity.y * deltatime;
 
-		this.players.forEach((player) => this.checkInput(player, this.ball));
+		this.players.forEach((player) => this.checkInput(player, this.ball)); // calls beide spelers en checkinput
 
 		this.checkCollisions(this.players, this.ball, this.hud.edges, deltatime);
 	}
@@ -118,19 +117,20 @@ class Game {
 
 		if (ball.out) return;
 
-		if (ball.left + ball.velocity.y * deltatime < players[0].right || ball.right - ball.velocity.y * deltatime > players[1].left) {
+		
+		if (ball.left + ball.velocity.y * deltatime < players[0].right || ball.right - ball.velocity.y * deltatime > players[1].left) { // controleerd of de ball de bovenkant of onderkant raakt
 			const player = ball.position.x < this.canvas.width / 2 ? players[0] : players[1];
 			if (this.collide(ball, player, deltatime)) {
-				if (ball.bottom > player.top && ball.top < player.bottom) {
-					console.log("frontale botsing gedetecteerd");
-					ball.position.x = player.id === 1 ? player.right + ball.size.y / 2 : player.left - ball.size.y / 2;
+				if (ball.bottom > player.top && ball.top < player.bottom) { // collison detectie
+					console.log("ball hit front");
+					ball.position.x = player.id === 1 ? player.right + ball.size.y / 2 : player.left - ball.size.y / 2; 
 					ball.velocity.x = -ball.velocity.x;
 
                     const ballY    = ball.position.y   | 0;
                     const playerY  = player.position.y | 0;
                     const distance = ballY < playerY ? Math.abs(ballY - playerY) : -Math.abs(ballY - playerY);
 
-                    console.log( "afstand vanaf midden van bedje: "+distance );
+                    console.log( "afstand player: "+distance );
 
                     if(distance !== 0)  ball.setAngle( player.id===1 ? distance : -distance+180 ); 
 
@@ -139,25 +139,25 @@ class Game {
                     Math.ceil()
                     Math.PI 
 
-                    ball.setSpeed( ball.speed*1.1 );
+                    ball.setSpeed( ball.speed*1.1 ); // verhoogd de snelheid met een volle 10%
 				} else if (ball.position.y < player.position.y) {
-					console.log("botsing aan de bovenkant van speler gedetecteerd");
+					console.log("ball hit aan de bovenkant");
 					ball.position.y = player.top - ball.size.y / 2;
 					ball.velocity.y = player.velocity.y < 0 && player.velocity.y < ball.velocity.y ? player.velocity.y * 1.1 : -ball.velocity.y;
 				} else if (ball.position.y > player.position.y) {
-					console.log("botsing aan de onderkant van speler gedetecteerd");
+					console.log("ball hit aan de onderkant");
 					ball.position.y = player.bottom + ball.size.y;
 					ball.velocity.y = player.velocity.y > 0 && player.velocity.y > ball.velocity.y ? player.velocity.y * 1.1 : -ball.velocity.y;
 				}
 			}
 
 			
-			if (ball.right < 0 || ball.left > this.canvas.width) {
+			if (ball.right < 0 || ball.left > this.canvas.width) { // controleerd of de bal loes is
 				this.hud.addScore(player.id === 1 ? 2 : 1);
 				ball.out = true;
 				setTimeout(() => {
-				// 	this.ball.reset();
-				// }, 1000);
+					this.ball.reset();
+				}, 1000);
 			}
 		}
 
